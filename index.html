@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Wedding Invitation | Anitha Madhu & Somesh Bellanki</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --card-bg: #ffffff;
+      --page-bg: #ece9e2;
+      --eucalyptus: #5b827e;
+      --eucalyptus-dark: #375350;
+      --gold-accent: #c5a059;
+      --text-dark: #222222;
+      --text-muted: #666666;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      background-color: var(--page-bg);
+      font-family: 'Montserrat', sans-serif;
+      color: var(--text-dark);
+    }
+
+    .app-viewport {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      min-height: -webkit-fill-available;
+      overflow: hidden;
+      perspective: 2000px;
+      display: flex;
+    }
+
+    #lilyPetalsCanvas, #dustParticleCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    #lilyPetalsCanvas { z-index: 90; }
+    #dustParticleCanvas { z-index: 95; }
+
+    /* FLOATING MUSIC CONTROLLER */
+    .music-control-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 120;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid var(--gold-accent);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(55, 83, 80, 0.2);
+      backdrop-filter: blur(6px);
+      transition: all 0.3s ease;
+      color: var(--eucalyptus-dark);
+      font-size: 1.15rem;
+    }
+
+    .music-control-btn:hover {
+      transform: scale(1.08);
+      background: #ffffff;
+    }
+
+    .music-control-btn.playing {
+      animation: pulseMusic 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulseMusic {
+      0%, 100% { box-shadow: 0 4px 15px rgba(55, 83, 80, 0.2); }
+      50% { box-shadow: 0 4px 22px rgba(197, 160, 89, 0.55); }
+    }
+
+    /* =========================================
+       PAGE 1: GATEFOLD DOORS COVER
+       ========================================= */
+    .gatefold-cover {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 50;
+      display: flex;
+      pointer-events: all;
+      transition: visibility 1.6s ease;
+    }
+
+    .door {
+      width: 50vw;
+      height: 100%;
+      background: radial-gradient(circle at center, #ffffff 10%, #eae5dc 85%);
+      box-shadow: inset 0 0 100px rgba(91, 130, 126, 0.18);
+      transition: transform 1.4s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .door-left {
+      transform-origin: left center;
+      border-right: 1.5px solid rgba(197, 160, 89, 0.5);
+    }
+
+    .door-right {
+      transform-origin: right center;
+      border-left: 1.5px solid rgba(91, 130, 126, 0.15);
+    }
+
+    .center-badge-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 500px;
+      height: 500px;
+      z-index: 55;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ffffff;
+      border-radius: 50%;
+      box-shadow: 0 20px 50px rgba(55, 83, 80, 0.22);
+      transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1), transform 0.95s cubic-bezier(0.4, 0, 0.2, 1), filter 0.85s ease;
+      padding: 30px;
+    }
+
+    .badge-content {
+      position: relative;
+      z-index: 60;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 84%;
+    }
+
+    .invite-lead {
+      font-size: 0.74rem;
+      letter-spacing: 2px;
+      text-transform: lowercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+
+    /* FRONT COVER RUNNING LETTERS */
+    .names-front {
+      font-family: 'Pinyon Script', cursive;
+      font-size: clamp(3.2rem, 7vw, 4.4rem);
+      color: var(--text-dark);
+      line-height: 1.05;
+      margin-bottom: 14px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px rgba(197, 160, 89, 0.18);
+    }
+
+    .names-front span {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      text-transform: lowercase;
+      font-size: 0.42em;
+      letter-spacing: 0;
+      color: var(--eucalyptus);
+      margin: 1px 0;
+    }
+
+    .open-btn {
+      background: linear-gradient(135deg, var(--eucalyptus) 0%, var(--eucalyptus-dark) 100%);
+      color: #ffffff;
+      border: 1px solid var(--gold-accent);
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-size: 0.74rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 18px rgba(55, 83, 80, 0.35);
+      transition: all 0.3s ease;
+    }
+
+    .open-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(55, 83, 80, 0.55);
+    }
+
+    .app-viewport.dusting .center-badge-wrapper {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(1.1);
+      filter: blur(14px) brightness(1.2);
+      pointer-events: none;
+    }
+
+    .app-viewport.opened .door-left { transform: rotateY(-120deg); }
+    .app-viewport.opened .door-right { transform: rotateY(120deg); }
+    .app-viewport.opened .gatefold-cover {
+      pointer-events: none;
+      visibility: hidden;
+      transition-delay: 1.5s;
+    }
+
+    /* =========================================
+       PAGE 2: INNER EDITORIAL FOLIO
+       ========================================= */
+    .inner-viewport {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #eae7e1;
+      opacity: 0;
+      transform: scale(0.98);
+      transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.35s;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 30px 15px;
+    }
+
+    .app-viewport.opened .inner-viewport {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .invitation-landscape-card {
+      position: relative;
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.16);
+      max-width: 1140px;
+      width: 100%;
+      min-height: 640px;
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      overflow: hidden;
+      margin: auto;
+    }
+
+    /* LEFT DETAILS PANE */
+    .folio-left-details {
+      flex: 1;
+      padding: 48px 36px 48px 44px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      justify-content: center;
+      z-index: 10;
+      background: transparent;
+    }
+
+    .intro-caption {
+      font-size: 0.74rem;
+      letter-spacing: 2px;
+      color: #666666;
+      line-height: 1.8;
+      margin-bottom: 16px;
+      text-transform: lowercase;
+    }
+
+    .editorial-names {
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* RUNNING SCRIPT FOR NAMES */
+    .editorial-name-primary {
+      font-family: 'Pinyon Script', cursive;
+      font-size: clamp(3.2rem, 5.8vw, 4.6rem);
+      color: #1f1f1f;
+      line-height: 1.0;
+      font-weight: 400;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 10px rgba(197, 160, 89, 0.22);
+    }
+
+    .editorial-and {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+      color: var(--eucalyptus);
+      margin: 2px 0;
+      display: block;
+    }
+
+    .ceremony-details {
+      font-size: 0.78rem;
+      color: #555555;
+      letter-spacing: 1.6px;
+      line-height: 2;
+      margin-bottom: 20px;
+    }
+
+    .ceremony-details .highlight-venue {
+      font-weight: 600;
+      color: #1a1a1a;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .venue-map-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #f4f1ea;
+      color: var(--eucalyptus-dark);
+      text-decoration: none;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .venue-map-link:hover {
+      background: #e6e0d3;
+      transform: translateY(-1px);
+    }
+
+    .countdown-grid {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      max-width: 320px;
+      margin-bottom: 24px;
+    }
+
+    .count-tile {
+      background: #faf8f5;
+      border: 1px solid #eee7db;
+      border-radius: 8px;
+      padding: 8px 6px;
+      text-align: center;
+      flex: 1;
+    }
+
+    .count-tile .num {
+      display: block;
+      font-family: 'Cinzel', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--eucalyptus-dark);
+    }
+
+    .count-tile .lbl {
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #777777;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .rsvp-main-btn {
+      background: linear-gradient(135deg, var(--eucalyptus) 0%, var(--eucalyptus-dark) 100%);
+      color: #ffffff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(55, 83, 80, 0.28);
+      transition: all 0.3s ease;
+    }
+
+    .rsvp-main-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(55, 83, 80, 0.45);
+    }
+
+    .replay-doors-btn {
+      background: transparent;
+      border: 1px solid #dcd3c3;
+      color: #666666;
+      padding: 11px 20px;
+      border-radius: 30px;
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .replay-doors-btn:hover {
+      background: #ffffff;
+      color: #222222;
+      border-color: #222222;
+    }
+
+    /* RIGHT: PHOTO SECTION */
+    .folio-right-image-pane {
+      flex: 1.15;
+      position: relative;
+      display: flex;
+      align-items: stretch;
+      justify-content: stretch;
+      overflow: hidden;
+      padding: 0;
+      align-self: stretch;
+    }
+
+    .photo-display-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .clean-botanical-img {
+      width: 100%;
+      height: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      object-position: 15% center;
+      display: block;
+      animation: ambientBreathe 14s ease-in-out infinite alternate;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 14%);
+      mask-image: linear-gradient(to right, transparent 0%, black 14%);
+    }
+
+    @keyframes ambientBreathe {
+      0% { transform: scale(1.0); }
+      50% { transform: scale(1.025) translateY(-3px); }
+      100% { transform: scale(1.01) translateY(2px); }
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 860px) {
+      .invitation-landscape-card {
+        flex-direction: column-reverse;
+        max-width: 480px;
+        min-height: auto;
+      }
+      .folio-right-image-pane {
+        width: 100%;
+        height: 480px;
+      }
+      .clean-botanical-img {
+        object-position: center 20%;
+        -webkit-mask-image: linear-gradient(to top, transparent 0%, black 15%);
+        mask-image: linear-gradient(to top, transparent 0%, black 15%);
+      }
+      .folio-left-details {
+        padding: 35px 22px 50px 22px;
+      }
+    }
+
+    /* RSVP MODAL */
+    .rsvp-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 35, 33, 0.65);
+      backdrop-filter: blur(6px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      padding: 20px;
+    }
+
+    .rsvp-modal.active { display: flex; }
+
+    .modal-card {
+      background: #ffffff;
+      padding: 35px 28px;
+      border-radius: 14px;
+      border: 1.5px solid var(--eucalyptus);
+      width: 100%;
+      max-width: 420px;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      font-size: 1.6rem;
+      color: #999;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+    }
+
+    .modal-card h3 {
+      font-family: 'Cinzel', serif;
+      color: var(--eucalyptus-dark);
+      font-size: 1.35rem;
+      margin-bottom: 6px;
+    }
+
+    .modal-card p {
+      font-size: 0.8rem;
+      color: #777;
+      margin-bottom: 20px;
+    }
+
+    .submit-rsvp-btn {
+      color: white;
+      border: none;
+      padding: 13px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.25s, transform 0.2s;
+    }
+    .submit-rsvp-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+
+  <!-- BACKGROUND AUDIO: Dual sources ensuring compatibility -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="wedding-music.mp3" type="audio/mpeg" />
+    <source src="%23Seetakalyana%20%23KurunjiRaagam%20%23Tyagarajaswamy%20%23Veenasrivani.mp3" type="audio/mpeg" />
+    <source src="#Seetakalyana #KurunjiRaagam #Tyagarajaswamy #Veenasrivani.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- FLOATING MUSIC TOGGLE BUTTON (Defaults to music note) -->
+  <button class="music-control-btn playing" id="musicToggleBtn" onclick="toggleMusic()" title="Play / Pause Music">
+    🎵
+  </button>
+
+  <!-- FLOATING NATURAL BOTANICAL LEAF PETALS & GOLD DUST -->
+  <canvas id="lilyPetalsCanvas"></canvas>
+  <canvas id="dustParticleCanvas"></canvas>
+
+  <div class="app-viewport" id="appViewport">
+
+    <!-- PAGE 1: GATEFOLD DOORS COVER -->
+    <div class="gatefold-cover">
+      <div class="door door-left"></div>
+      
+      <div class="center-badge-wrapper" id="heartWrapper">
+        <svg style="position: absolute; inset: -15px; width: calc(100% + 30px); height: calc(100% + 30px); pointer-events: none;" viewBox="0 0 500 500">
+          <circle cx="250" cy="250" r="230" stroke="#c5a059" stroke-width="1.8" fill="none" opacity="0.8" />
+          <circle cx="250" cy="250" r="236" stroke="#c5a059" stroke-width="1" fill="none" stroke-dasharray="4,6" opacity="0.6" />
+        </svg>
+
+        <div class="badge-content">
+          <div class="invite-lead">with joy<br>you are warmly invited<br>to the wedding of</div>
+          <div class="names-front">
+            Anitha
+            <span>and</span>
+            Somesh
+          </div>
+          <button class="open-btn" onclick="triggerDustAndOpen()">
+            Open Invitation <span>♥</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="door door-right"></div>
+    </div>
+
+    <!-- PAGE 2: FULLSCREEN INNER FOLIO -->
+    <div class="inner-viewport">
+      <div class="invitation-landscape-card">
+
+        <!-- LEFT: CLEAN BOTANICAL EDITORIAL TEXT -->
+        <div class="folio-left-details">
+          <div class="intro-caption">
+            with joy<br>
+            you are warmly invited<br>
+            to the wedding of
+          </div>
+
+          <div class="editorial-names">
+            <div class="editorial-name-primary">Anitha</div>
+            <div class="editorial-and">and</div>
+            <div class="editorial-name-primary">Somesh</div>
+          </div>
+
+          <div class="ceremony-details">
+            thursday, december tenth<br>
+            two thousand twenty-six<br>
+            10:45 am - 11:50 am<br>
+            <div class="highlight-venue">Sree Gokulam Auditorium</div>
+            kaithapram, kannur, kerala
+          </div>
+
+          <a class="venue-map-link" href="https://maps.google.com/?q=Sree+Gokulam+Auditorium+Kaithapram" target="_blank">
+            Venue Location ↗
+          </a>
+
+          <div class="countdown-grid">
+            <div class="count-tile"><span class="num" id="d">00</span><span class="lbl">Days</span></div>
+            <div class="count-tile"><span class="num" id="h">00</span><span class="lbl">Hours</span></div>
+            <div class="count-tile"><span class="num" id="m">00</span><span class="lbl">Mins</span></div>
+            <div class="count-tile"><span class="num" id="s">00</span><span class="lbl">Secs</span></div>
+          </div>
+
+          <div class="action-row">
+            <button class="rsvp-main-btn" onclick="toggleRSVP(true)">RSVP via WhatsApp</button>
+            <button class="replay-doors-btn" onclick="closeInvitation()">Close Cover</button>
+          </div>
+        </div>
+
+        <!-- RIGHT: SEAMLESS FIT PHOTO SECTION -->
+        <div class="folio-right-image-pane">
+          <div class="photo-display-wrapper">
+            <img 
+              class="clean-botanical-img" 
+              src="Watercolor Couple with Botanical Accents.png" 
+              alt="Anitha & Somesh"
+            />
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RSVP POPUP MODAL (DIRECT WHATSAPP TO 919400563096) -->
+  <div class="rsvp-modal" id="rsvpModal">
+    <div class="modal-card">
+      <button class="close-modal" onclick="toggleRSVP(false)">&times;</button>
+      <h3>Kindly RSVP</h3>
+      <p>Will you be joining us in our celebration?</p>
+      
+      <div style="margin-bottom: 16px; text-align: left;">
+        <label style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.2px; font-weight: 600; color: #555; margin-bottom: 5px; display: block;">Your Name (Optional)</label>
+        <input type="text" id="quickGuestName" placeholder="Enter your name / family" style="width: 100%; padding: 11px 14px; border: 1px solid #d4cebe; border-radius: 8px; font-size: 0.9rem; outline: none;" />
+      </div>
+
+      <div style="display: flex; gap: 12px; margin-top: 10px;">
+        <button type="button" class="submit-rsvp-btn" style="flex: 1; background: #25D366;" onclick="sendDirectRSVP(true)">
+          Yes, Attending 🎉
+        </button>
+        <button type="button" class="submit-rsvp-btn" style="flex: 1; background: #6b7280;" onclick="sendDirectRSVP(false)">
+          Cannot Attend 🤍
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const viewport = document.getElementById('appViewport');
+
+    /* =========================================================
+       AUDIO ENGINE: ROBUST USER GESTURE UNLOCK
+       ========================================================= */
+    const bgMusic = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicToggleBtn');
+    let isMusicPlaying = false;
+
+    // Set unmuted 20% background volume
+    bgMusic.muted = false;
+    bgMusic.volume = 0.20;
+
+    function playAudioTrack() {
+      if (isMusicPlaying) return;
+
+      bgMusic.muted = false;
+      bgMusic.volume = 0.20;
+      const playPromise = bgMusic.play();
+
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          isMusicPlaying = true;
+          musicBtn.classList.add('playing');
+          musicBtn.innerText = '🎵';
+        }).catch(() => {
+          // Awaiting user interaction per browser autoplay policies
+          isMusicPlaying = false;
+        });
+      }
+    }
+
+    // Global listener: Starts audio seamlessly on the very first screen interaction
+    const userTouchEvents = ['touchstart', 'pointerdown', 'mousedown', 'keydown'];
+    function unlockAudioOnFirstInteraction() {
+      playAudioTrack();
+      userTouchEvents.forEach(evt => window.removeEventListener(evt, unlockAudioOnFirstInteraction));
+    }
+    userTouchEvents.forEach(evt => window.addEventListener(evt, unlockAudioOnFirstInteraction, { passive: true }));
+
+    function toggleMusic() {
+      if (bgMusic.paused) {
+        bgMusic.muted = false;
+        bgMusic.volume = 0.20;
+        bgMusic.play().then(() => {
+          isMusicPlaying = true;
+          musicBtn.classList.add('playing');
+          musicBtn.innerText = '🎵';
+        });
+      } else {
+        bgMusic.pause();
+        isMusicPlaying = false;
+        musicBtn.classList.remove('playing');
+        musicBtn.innerText = '🔇';
+      }
+    }
+
+    /* 1. EUCALYPTUS SAGE LEAF PETALS */
+    const lilyCanvas = document.getElementById('lilyPetalsCanvas');
+    const lilyCtx = lilyCanvas.getContext('2d');
+    let petals = [];
+
+    function resizePetalsCanvas() {
+      lilyCanvas.width = window.innerWidth;
+      lilyCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizePetalsCanvas);
+    resizePetalsCanvas();
+
+    const petalColors = ['#eef3f2', '#dde8e6', '#c4d7d4', '#9ab7b2'];
+
+    class EucalyptusPetal {
+      constructor() {
+        this.reset();
+        this.y = Math.random() * lilyCanvas.height;
+      }
+      reset() {
+        this.x = Math.random() * lilyCanvas.width;
+        this.y = -20;
+        this.size = Math.random() * 8 + 7;
+        this.speedY = Math.random() * 1.1 + 0.7;
+        this.speedX = Math.random() * 0.8 - 0.4;
+        this.rotation = Math.random() * 360;
+        this.rotSpeed = Math.random() * 1.4 - 0.7;
+        this.opacity = Math.random() * 0.45 + 0.35;
+        this.color = petalColors[Math.floor(Math.random() * petalColors.length)];
+      }
+      update() {
+        this.y += this.speedY;
+        this.x += Math.sin(this.y * 0.015) * 0.8 + this.speedX;
+        this.rotation += this.rotSpeed;
+        if (this.y > lilyCanvas.height + 20) this.reset();
+      }
+      draw() {
+        lilyCtx.save();
+        lilyCtx.translate(this.x, this.y);
+        lilyCtx.rotate((this.rotation * Math.PI) / 180);
+        lilyCtx.globalAlpha = this.opacity;
+
+        lilyCtx.beginPath();
+        lilyCtx.moveTo(0, -this.size);
+        lilyCtx.bezierCurveTo(this.size * 0.5, -this.size * 0.4, this.size * 0.4, this.size * 0.4, 0, this.size);
+        lilyCtx.bezierCurveTo(-this.size * 0.4, this.size * 0.4, -this.size * 0.5, -this.size * 0.4, 0, -this.size);
+        lilyCtx.fillStyle = this.color;
+        lilyCtx.fill();
+        lilyCtx.restore();
+      }
+    }
+
+    for (let i = 0; i < 24; i++) petals.push(new EucalyptusPetal());
+
+    function animatePetals() {
+      lilyCtx.clearRect(0, 0, lilyCanvas.width, lilyCanvas.height);
+      petals.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animatePetals);
+    }
+    animatePetals();
+
+    /* 2. GOLDEN SPARKLE DUST SYSTEM */
+    const dustCanvas = document.getElementById('dustParticleCanvas');
+    const dustCtx = dustCanvas.getContext('2d');
+    let dustParticles = [];
+    let dustAnimFrame = null;
+
+    function resizeDustCanvas() {
+      dustCanvas.width = window.innerWidth;
+      dustCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeDustCanvas);
+    resizeDustCanvas();
+
+    class StardustParticle {
+      constructor(originX, originY) {
+        this.x = originX;
+        this.y = originY;
+
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 7 + 1.2;
+        this.vx = Math.cos(angle) * speed * 0.8;
+        this.vy = Math.sin(angle) * speed - 1.2;
+
+        this.radius = Math.random() * 3 + 0.8;
+        this.alpha = 1;
+        this.decay = Math.random() * 0.015 + 0.008;
+
+        const palette = ['#ffffff', '#fcf6e8', '#e8d4a7', '#c5a059'];
+        this.color = palette[Math.floor(Math.random() * palette.length)];
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vx *= 0.96;
+        this.vy *= 0.96;
+        this.vy -= 0.03;
+        this.alpha -= this.decay;
+      }
+
+      draw() {
+        if (this.alpha <= 0) return;
+        dustCtx.save();
+        dustCtx.globalAlpha = Math.max(0, this.alpha);
+        dustCtx.beginPath();
+        dustCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        dustCtx.fillStyle = this.color;
+        dustCtx.shadowColor = '#c5a059';
+        dustCtx.shadowBlur = 8;
+        dustCtx.fill();
+        dustCtx.restore();
+      }
+    }
+
+    function spawnIntenseDustBurst() {
+      const hw = document.getElementById('heartWrapper');
+      const rect = hw.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const radius = rect.width / 2;
+
+      for (let i = 0; i < 220; i++) {
+        const theta = Math.random() * Math.PI * 2;
+        const r = Math.sqrt(Math.random()) * radius;
+        dustParticles.push(new StardustParticle(
+          centerX + r * Math.cos(theta),
+          centerY + r * Math.sin(theta)
+        ));
+      }
+
+      if (!dustAnimFrame) animateDust();
+    }
+
+    function animateDust() {
+      dustCtx.clearRect(0, 0, dustCanvas.width, dustCanvas.height);
+      dustParticles = dustParticles.filter(p => p.alpha > 0);
+      dustParticles.forEach(p => { p.update(); p.draw(); });
+
+      if (dustParticles.length > 0) {
+        dustAnimFrame = requestAnimationFrame(animateDust);
+      } else {
+        dustAnimFrame = null;
+      }
+    }
+
+    /* 3. DISSOLVE & OPEN (DIRECT BUTTON CLICK PLAYS MUSIC) */
+    function triggerDustAndOpen() {
+      playAudioTrack();
+
+      viewport.classList.add('dusting');
+      spawnIntenseDustBurst();
+
+      setTimeout(() => {
+        viewport.classList.add('opened');
+      }, 650);
+    }
+
+    function closeInvitation() {
+      viewport.classList.remove('opened');
+      viewport.classList.remove('dusting');
+    }
+
+    /* 4. COUNTDOWN TIMER (Dec 10, 2026, 10:45 AM) */
+    const weddingDate = new Date("December 10, 2026 10:45:00").getTime();
+
+    function runCountdown() {
+      const now = new Date().getTime();
+      const diff = weddingDate - now;
+
+      if (diff > 0) {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById('d').innerText = days.toString().padStart(2, '0');
+        document.getElementById('h').innerText = hours.toString().padStart(2, '0');
+        document.getElementById('m').innerText = minutes.toString().padStart(2, '0');
+        document.getElementById('s').innerText = seconds.toString().padStart(2, '0');
+      } else {
+        const grid = document.querySelector('.countdown-grid');
+        if (grid) {
+          grid.innerHTML = "<p style='color:var(--eucalyptus-dark); font-weight:600;'>The celebrations have begun! 🎉</p>";
+        }
+      }
+    }
+    setInterval(runCountdown, 1000);
+    runCountdown();
+
+    /* 5. DIRECT ONE-CLICK WHATSAPP RSVP (TO 919400563096) */
+    function toggleRSVP(show) {
+      document.getElementById('rsvpModal').classList.toggle('active', show);
+    }
+
+    function sendDirectRSVP(isAttending) {
+      const phoneNumber = "919400563096";
+      const rawName = document.getElementById('quickGuestName').value.trim();
+      const guestName = rawName ? rawName : "A Guest";
+
+      const status = isAttending 
+        ? "Joyfully Accept 🎉 (Will be attending)" 
+        : "Regretfully Decline 🤍 (Cannot attend)";
+
+      const message = 
+        `*Wedding RSVP Response*\n\n` +
+        `👰🤵 *Wedding of:* Anitha Madhu & Somesh Bellanki\n` +
+        `📅 *Date:* Thursday, 10 December 2026 (10:45 AM - 11:50 AM)\n` +
+        `📍 *Venue:* Sree Gokulam Auditorium, Kaithapram\n\n` +
+        `👤 *From:* ${guestName}\n` +
+        `💌 *Response:* ${status}\n\n` +
+        (isAttending ? `Looking forward to celebrating with you! ✨` : `Sending heartfelt wishes and blessings! ✨`);
+
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+
+      toggleRSVP(false);
+      window.open(whatsappUrl, '_blank');
+    }
+  </script>
+</body>
+</html>
