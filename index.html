@@ -39,7 +39,7 @@
       position: relative;
       width: 100vw;
       height: 100vh;
-      min-height: -webkit-fill-available;
+      height: 100dvh;
       overflow: hidden;
       perspective: 2000px;
       display: flex;
@@ -58,14 +58,14 @@
     /* FLOATING MUSIC CONTROLLER */
     .music-control-btn {
       position: fixed;
-      top: 20px;
-      right: 20px;
+      top: 15px;
+      right: 15px;
       z-index: 120;
       background: rgba(255, 255, 255, 0.88);
       border: 1px solid var(--gold-accent);
       border-radius: 50%;
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -74,7 +74,7 @@
       backdrop-filter: blur(6px);
       transition: all 0.3s ease;
       color: var(--eucalyptus-dark);
-      font-size: 1.15rem;
+      font-size: 1rem;
     }
 
     .music-control-btn:hover {
@@ -92,13 +92,14 @@
     }
 
     /* =========================================
-       PAGE 1: GATEFOLD DOORS COVER
+       PAGE 1: GATEFOLD DOORS COVER (FULLY RESPONSIVE)
        ========================================= */
     .gatefold-cover {
       position: fixed;
       inset: 0;
       width: 100vw;
       height: 100vh;
+      height: 100dvh;
       z-index: 50;
       display: flex;
       pointer-events: all;
@@ -128,9 +129,10 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 90%;
-      max-width: 500px;
-      height: 500px;
+      width: 86vw;
+      max-width: 440px;
+      height: 86vw;
+      max-height: 440px;
       z-index: 55;
       display: flex;
       justify-content: center;
@@ -139,7 +141,7 @@
       border-radius: 50%;
       box-shadow: 0 20px 50px rgba(55, 83, 80, 0.22);
       transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1), transform 0.95s cubic-bezier(0.4, 0, 0.2, 1), filter 0.85s ease;
-      padding: 30px;
+      padding: 20px;
     }
 
     .badge-content {
@@ -149,25 +151,25 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      width: 84%;
+      width: 90%;
     }
 
     .invite-lead {
-      font-size: 0.74rem;
-      letter-spacing: 2px;
+      font-size: 0.7rem;
+      letter-spacing: 1.8px;
       text-transform: lowercase;
       color: var(--text-muted);
-      margin-bottom: 10px;
-      line-height: 1.6;
+      margin-bottom: 8px;
+      line-height: 1.5;
     }
 
     /* FRONT COVER RUNNING LETTERS */
     .names-front {
       font-family: 'Pinyon Script', cursive;
-      font-size: clamp(3.2rem, 7vw, 4.4rem);
+      font-size: clamp(2.8rem, 12vw, 4rem);
       color: var(--text-dark);
-      line-height: 1.05;
-      margin-bottom: 14px;
+      line-height: 1.0;
+      margin-bottom: 12px;
       font-weight: 400;
       letter-spacing: 1px;
       text-shadow: 0 2px 8px rgba(197, 160, 89, 0.18);
@@ -178,7 +180,7 @@
       font-family: 'Playfair Display', serif;
       font-style: italic;
       text-transform: lowercase;
-      font-size: 0.42em;
+      font-size: 0.4em;
       letter-spacing: 0;
       color: var(--eucalyptus);
       margin: 1px 0;
@@ -188,16 +190,16 @@
       background: linear-gradient(135deg, var(--eucalyptus) 0%, var(--eucalyptus-dark) 100%);
       color: #ffffff;
       border: 1px solid var(--gold-accent);
-      padding: 12px 30px;
+      padding: 10px 24px;
       border-radius: 30px;
-      font-size: 0.74rem;
-      letter-spacing: 2px;
+      font-size: 0.7rem;
+      letter-spacing: 1.8px;
       text-transform: uppercase;
       font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       box-shadow: 0 6px 18px rgba(55, 83, 80, 0.35);
       transition: all 0.3s ease;
     }
@@ -230,6 +232,7 @@
       inset: 0;
       width: 100%;
       height: 100%;
+      height: 100dvh;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -239,7 +242,7 @@
       transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.35s;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      padding: 30px 15px;
+      padding: 20px 10px;
     }
 
     .app-viewport.opened .inner-viewport {
@@ -250,11 +253,11 @@
     .invitation-landscape-card {
       position: relative;
       background: #ffffff;
-      border-radius: 18px;
+      border-radius: 16px;
       box-shadow: 0 30px 70px rgba(0, 0, 0, 0.16);
-      max-width: 1140px;
+      max-width: 1100px;
       width: 100%;
-      min-height: 640px;
+      min-height: 600px;
       display: flex;
       flex-direction: row;
       align-items: stretch;
@@ -265,7 +268,7 @@
     /* LEFT DETAILS PANE */
     .folio-left-details {
       flex: 1;
-      padding: 48px 36px 48px 44px;
+      padding: 40px 30px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -276,16 +279,16 @@
     }
 
     .intro-caption {
-      font-size: 0.74rem;
-      letter-spacing: 2px;
+      font-size: 0.72rem;
+      letter-spacing: 1.8px;
       color: #666666;
       line-height: 1.8;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       text-transform: lowercase;
     }
 
     .editorial-names {
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -294,7 +297,7 @@
     /* RUNNING SCRIPT FOR NAMES */
     .editorial-name-primary {
       font-family: 'Pinyon Script', cursive;
-      font-size: clamp(3.2rem, 5.8vw, 4.6rem);
+      font-size: clamp(2.8rem, 5.2vw, 4.2rem);
       color: #1f1f1f;
       line-height: 1.0;
       font-weight: 400;
@@ -305,24 +308,24 @@
     .editorial-and {
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+      font-size: clamp(1.3rem, 2vw, 1.7rem);
       color: var(--eucalyptus);
       margin: 2px 0;
       display: block;
     }
 
     .ceremony-details {
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: #555555;
-      letter-spacing: 1.6px;
-      line-height: 2;
-      margin-bottom: 20px;
+      letter-spacing: 1.5px;
+      line-height: 1.9;
+      margin-bottom: 18px;
     }
 
     .ceremony-details .highlight-venue {
       font-weight: 600;
       color: #1a1a1a;
-      letter-spacing: 2px;
+      letter-spacing: 1.8px;
       text-transform: uppercase;
       margin-top: 4px;
     }
@@ -334,13 +337,13 @@
       background: #f4f1ea;
       color: var(--eucalyptus-dark);
       text-decoration: none;
-      padding: 6px 16px;
+      padding: 6px 14px;
       border-radius: 20px;
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 600;
-      letter-spacing: 1.2px;
+      letter-spacing: 1.1px;
       text-transform: uppercase;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
       transition: background 0.2s ease, transform 0.2s ease;
     }
     .venue-map-link:hover {
@@ -350,17 +353,17 @@
 
     .countdown-grid {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       width: 100%;
-      max-width: 320px;
-      margin-bottom: 24px;
+      max-width: 300px;
+      margin-bottom: 20px;
     }
 
     .count-tile {
       background: #faf8f5;
       border: 1px solid #eee7db;
       border-radius: 8px;
-      padding: 8px 6px;
+      padding: 6px 4px;
       text-align: center;
       flex: 1;
     }
@@ -368,21 +371,21 @@
     .count-tile .num {
       display: block;
       font-family: 'Cinzel', serif;
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 600;
       color: var(--eucalyptus-dark);
     }
 
     .count-tile .lbl {
-      font-size: 0.55rem;
+      font-size: 0.52rem;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
+      letter-spacing: 1px;
       color: #777777;
     }
 
     .action-row {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       align-items: center;
       justify-content: center;
       flex-wrap: wrap;
@@ -392,11 +395,11 @@
       background: linear-gradient(135deg, var(--eucalyptus) 0%, var(--eucalyptus-dark) 100%);
       color: #ffffff;
       border: none;
-      padding: 12px 28px;
+      padding: 11px 24px;
       border-radius: 30px;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 600;
-      letter-spacing: 2px;
+      letter-spacing: 1.8px;
       text-transform: uppercase;
       cursor: pointer;
       box-shadow: 0 6px 18px rgba(55, 83, 80, 0.28);
@@ -412,10 +415,10 @@
       background: transparent;
       border: 1px solid #dcd3c3;
       color: #666666;
-      padding: 11px 20px;
+      padding: 10px 18px;
       border-radius: 30px;
-      font-size: 0.72rem;
-      letter-spacing: 1.5px;
+      font-size: 0.68rem;
+      letter-spacing: 1.3px;
       text-transform: uppercase;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -469,22 +472,26 @@
 
     /* Mobile Responsive */
     @media (max-width: 860px) {
+      .inner-viewport {
+        padding: 15px 10px;
+      }
       .invitation-landscape-card {
         flex-direction: column-reverse;
-        max-width: 480px;
+        max-width: 440px;
         min-height: auto;
+        border-radius: 12px;
       }
       .folio-right-image-pane {
         width: 100%;
-        height: 480px;
+        height: 380px;
       }
       .clean-botanical-img {
-        object-position: center 20%;
-        -webkit-mask-image: linear-gradient(to top, transparent 0%, black 15%);
-        mask-image: linear-gradient(to top, transparent 0%, black 15%);
+        object-position: center 25%;
+        -webkit-mask-image: linear-gradient(to top, transparent 0%, black 12%);
+        mask-image: linear-gradient(to top, transparent 0%, black 12%);
       }
       .folio-left-details {
-        padding: 35px 22px 50px 22px;
+        padding: 30px 20px 40px 20px;
       }
     }
 
@@ -505,11 +512,11 @@
 
     .modal-card {
       background: #ffffff;
-      padding: 35px 28px;
+      padding: 30px 24px;
       border-radius: 14px;
       border: 1.5px solid var(--eucalyptus);
       width: 100%;
-      max-width: 420px;
+      max-width: 380px;
       position: relative;
       text-align: center;
       box-shadow: 0 25px 60px rgba(0,0,0,0.25);
@@ -517,9 +524,9 @@
 
     .close-modal {
       position: absolute;
-      top: 14px;
-      right: 18px;
-      font-size: 1.6rem;
+      top: 12px;
+      right: 16px;
+      font-size: 1.5rem;
       color: #999;
       cursor: pointer;
       border: none;
@@ -529,28 +536,28 @@
     .modal-card h3 {
       font-family: 'Cinzel', serif;
       color: var(--eucalyptus-dark);
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       margin-bottom: 6px;
     }
 
     .modal-card p {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: #777;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .submit-rsvp-btn {
       color: white;
       border: none;
-      padding: 13px;
+      padding: 12px;
       border-radius: 8px;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       cursor: pointer;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       transition: opacity 0.25s, transform 0.2s;
     }
     .submit-rsvp-btn:hover { opacity: 0.92; transform: translateY(-1px); }
@@ -558,15 +565,14 @@
 </head>
 <body>
 
-  <!-- BACKGROUND AUDIO: Dual sources ensuring compatibility -->
+  <!-- BACKGROUND AUDIO -->
   <audio id="bgMusic" loop preload="auto">
     <source src="wedding-music.mp3" type="audio/mpeg" />
     <source src="%23Seetakalyana%20%23KurunjiRaagam%20%23Tyagarajaswamy%20%23Veenasrivani.mp3" type="audio/mpeg" />
-    <source src="#Seetakalyana #KurunjiRaagam #Tyagarajaswamy #Veenasrivani.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- FLOATING MUSIC TOGGLE BUTTON (Defaults to music note) -->
-  <button class="music-control-btn playing" id="musicToggleBtn" onclick="toggleMusic()" title="Play / Pause Music">
+  <!-- FLOATING MUSIC TOGGLE BUTTON -->
+  <button class="music-control-btn" id="musicToggleBtn" onclick="toggleMusic()" title="Play / Pause Music">
     🎵
   </button>
 
@@ -581,7 +587,7 @@
       <div class="door door-left"></div>
       
       <div class="center-badge-wrapper" id="heartWrapper">
-        <svg style="position: absolute; inset: -15px; width: calc(100% + 30px); height: calc(100% + 30px); pointer-events: none;" viewBox="0 0 500 500">
+        <svg style="position: absolute; inset: -12px; width: calc(100% + 24px); height: calc(100% + 24px); pointer-events: none;" viewBox="0 0 500 500">
           <circle cx="250" cy="250" r="230" stroke="#c5a059" stroke-width="1.8" fill="none" opacity="0.8" />
           <circle cx="250" cy="250" r="236" stroke="#c5a059" stroke-width="1" fill="none" stroke-dasharray="4,6" opacity="0.6" />
         </svg>
@@ -668,12 +674,12 @@
       <h3>Kindly RSVP</h3>
       <p>Will you be joining us in our celebration?</p>
       
-      <div style="margin-bottom: 16px; text-align: left;">
-        <label style="font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.2px; font-weight: 600; color: #555; margin-bottom: 5px; display: block;">Your Name (Optional)</label>
-        <input type="text" id="quickGuestName" placeholder="Enter your name / family" style="width: 100%; padding: 11px 14px; border: 1px solid #d4cebe; border-radius: 8px; font-size: 0.9rem; outline: none;" />
+      <div style="margin-bottom: 14px; text-align: left;">
+        <label style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.1px; font-weight: 600; color: #555; margin-bottom: 4px; display: block;">Your Name (Optional)</label>
+        <input type="text" id="quickGuestName" placeholder="Enter your name / family" style="width: 100%; padding: 10px 12px; border: 1px solid #d4cebe; border-radius: 8px; font-size: 0.88rem; outline: none;" />
       </div>
 
-      <div style="display: flex; gap: 12px; margin-top: 10px;">
+      <div style="display: flex; gap: 10px; margin-top: 8px;">
         <button type="button" class="submit-rsvp-btn" style="flex: 1; background: #25D366;" onclick="sendDirectRSVP(true)">
           Yes, Attending 🎉
         </button>
@@ -694,30 +700,25 @@
     const musicBtn = document.getElementById('musicToggleBtn');
     let isMusicPlaying = false;
 
-    // Set unmuted 20% background volume
-    bgMusic.muted = false;
     bgMusic.volume = 0.20;
 
     function playAudioTrack() {
-      if (isMusicPlaying) return;
-
       bgMusic.muted = false;
       bgMusic.volume = 0.20;
       const playPromise = bgMusic.play();
-
       if (playPromise !== undefined) {
         playPromise.then(() => {
           isMusicPlaying = true;
           musicBtn.classList.add('playing');
           musicBtn.innerText = '🎵';
         }).catch(() => {
-          // Awaiting user interaction per browser autoplay policies
           isMusicPlaying = false;
+          musicBtn.classList.remove('playing');
+          musicBtn.innerText = '🔇';
         });
       }
     }
 
-    // Global listener: Starts audio seamlessly on the very first screen interaction
     const userTouchEvents = ['touchstart', 'pointerdown', 'mousedown', 'keydown'];
     function unlockAudioOnFirstInteraction() {
       playAudioTrack();
@@ -727,13 +728,7 @@
 
     function toggleMusic() {
       if (bgMusic.paused) {
-        bgMusic.muted = false;
-        bgMusic.volume = 0.20;
-        bgMusic.play().then(() => {
-          isMusicPlaying = true;
-          musicBtn.classList.add('playing');
-          musicBtn.innerText = '🎵';
-        });
+        playAudioTrack();
       } else {
         bgMusic.pause();
         isMusicPlaying = false;
@@ -888,10 +883,9 @@
       }
     }
 
-    /* 3. DISSOLVE & OPEN (DIRECT BUTTON CLICK PLAYS MUSIC) */
+    /* 3. DISSOLVE & OPEN */
     function triggerDustAndOpen() {
       playAudioTrack();
-
       viewport.classList.add('dusting');
       spawnIntenseDustBurst();
 
